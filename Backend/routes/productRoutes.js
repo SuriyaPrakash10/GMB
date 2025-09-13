@@ -1,6 +1,6 @@
 // routes/productRoutes.js
 import express from "express";
-import { searchProducts, getHome } from "../controllers/productController.js";
+import { searchProducts, getHome } from "../Controllers/productController.js";
 
 const router = express.Router();
 
