@@ -11,9 +11,6 @@ connectDB();
 
 const app = express();
 
-// ✅ Enable CORS
-import cors from "cors";
-
 const allowedOrigins = [
   "http://localhost:5173",                     // local dev
   "https://web.gmtraders.shop"                 // CloudFront / custom domain
