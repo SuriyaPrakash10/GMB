@@ -12,11 +12,27 @@ connectDB();
 const app = express();
 
 // ✅ Enable CORS
+import cors from "cors";
+
+const allowedOrigins = [
+  "http://localhost:5173",                     // local dev
+  "https://web.gmtraders.shop"                 // CloudFront / custom domain
+];
+
 app.use(cors({
-  origin: "http://localhost:5173", // your React app URL
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
+
 
 app.use(express.json());
 
@@ -25,5 +41,5 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/products", productRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
